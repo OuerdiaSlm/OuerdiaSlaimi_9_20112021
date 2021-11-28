@@ -35,6 +35,7 @@ export default class Login {
   handleSubmitAdmin = e => {
     const user = {
       type: "Admin",
+      // 1ere erreur [Bug report] - Login
       email: e.target.querySelector(`input[data-testid="admin-email-input"]`).value,
       password: e.target.querySelector(`input[data-testid="admin-password-input"]`).value,
       status: "connected"

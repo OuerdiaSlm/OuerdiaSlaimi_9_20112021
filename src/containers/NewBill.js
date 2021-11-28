@@ -30,6 +30,8 @@ export default class NewBill {
     const extension = fileName.split(".").pop()
     console.log(extension +" ici extension")
     let error=document.getElementById("errorMessagId")
+    
+    // 3eme erreur [Bug Hunt] - Bills
     if(extension === 'jpg' || extension === 'jpeg' || extension === 'png') {
       console.log("c'est ok")
     this.firestore

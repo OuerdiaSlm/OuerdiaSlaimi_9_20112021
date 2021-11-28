@@ -12,8 +12,21 @@
        const html = BillsUI({ data: []})
        document.body.innerHTML = html
        //to-do write expect expression
+      //............................
+      describe("When I click in buttonNewBill", ()=> {
+        test("Then function handleClickNewBill is called", ()=>{
+          window.onNavigate(ROUTES_PATH['Bills'])
+          const html = BillsUI({data:[]})
+          document.body.innerHTML = html
+          const onNavigate = (pathname) => {
+          document.body.innerHTML = ROUTES({pathname})
+      }
+        })
+      })
+      //............................
+
      })
-   
+     // 2eme erreur [Bug report] - Bills
      test("Then bills should be ordered from earliest to latest", () => {
        const html = BillsUI({ data: bills })
        document.body.innerHTML = html
