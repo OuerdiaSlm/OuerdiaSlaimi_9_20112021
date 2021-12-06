@@ -8,13 +8,14 @@ export default class NewBill {
     this.onNavigate = onNavigate
     this.firestore = firestore
     const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
+    //console.log(formNewBill.innerHTML+"iciii")
     formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
     file.addEventListener("change", this.handleChangeFile)
     this.fileUrl = null
     this.fileName = null
     new Logout({ document, localStorage, onNavigate })
-    console.log(this.document)
+    //console.log(this.document)
     //Création du msg d'erreur
     const error = this.document.createElement('p')
     const label = document.querySelector(`div[data-testid="errorMessag"]`)
@@ -25,15 +26,15 @@ export default class NewBill {
   }
   handleChangeFile = e => {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    console.log(file)
+    //console.log(file)
     const fileName = file.name
     const extension = fileName.split(".").pop()
-    console.log(extension +" ici extension")
+    //console.log(extension +" ici extension")
     let error=document.getElementById("errorMessagId")
     
     // 3eme erreur [Bug Hunt] - Bills
     if(extension === 'jpg' || extension === 'jpeg' || extension === 'png') {
-      console.log("c'est ok")
+      //console.log("c'est ok")
     this.firestore
       .storage
       .ref(`justificatifs/${file.name}`)
@@ -45,8 +46,8 @@ export default class NewBill {
       })
       error.style.display = "none"
     } else{
-      console.log(fileName)
-      console.log(file)
+      //console.log(fileName)
+      //console.log(file)
       const test = this.document.querySelector(`input[data-testid="file"]`)
       test.value=""
       error.style.display="block"
@@ -55,8 +56,9 @@ export default class NewBill {
   
   handleSubmit = e => {
     e.preventDefault()
-    console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
+    //console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     const email = JSON.parse(localStorage.getItem("user")).email
+    console.log(email);
     const bill = {
       email,
       type: e.target.querySelector(`select[data-testid="expense-type"]`).value,
