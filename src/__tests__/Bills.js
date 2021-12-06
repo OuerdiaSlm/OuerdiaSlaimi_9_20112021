@@ -7,7 +7,6 @@
  import { bills } from "../fixtures/bills.js"
  import { ROUTES } from "../constants/routes"
  import Bills from "../containers/Bills.js"
- import { localStorageMock } from "../__mocks__/localStorage.js"
  import firebase from "../__mocks__/firebase"
  import Logout from "../containers/Logout.js"
  
@@ -27,23 +26,6 @@
         expect(screen.getAllByText('Erreur')).toBeTruthy()
       })
     })
-    //........
-    /*
-     describe("When I click in  ", ()=> {
-      test("Then function handleClickNewBill is called", ()=>{
-        const onNavigate = (pathname) => {
-          document.body.innerHTML = ROUTES({ pathname })
-        }
-  
-        Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-        window.localStorage.setItem('user', JSON.stringify({
-          type: 'Employee'
-        }))
-      })
-    })
-    */
- 
-    //............................
    
      test("Then bills should be ordered from earliest to latest", () => {
        const html = BillsUI({ data: bills })
@@ -67,24 +49,22 @@
           }
           const bill = new Bills({document, onNavigate, firestore: null, localStorage: window.localStorage,})
           
-          const handleClickIconEye = jest.fn(bill, "handleClickIconEye")
+          $.fn.modal = jest.fn();
           const eye = screen.getAllByTestId('icon-eye')[1]
-          userEvent.click(eye)
-          expect(handleClickIconEye).toHaveBeenCalled()
-          
-          window.$ = jest.fn().mockImplementation(() => {
-            return {
-              modal: jest.fn()
-            }
-          })
-          //const modale = screen.getByTestId('modaleFileTest')
-          //expect(modale).toBeTruthy()
+          const handleClickIconEye = jest.fn(bill, "handleClickIconEye")
+          eye.addEventListener("click", () => bill.handleClickIconEye(eye));
+          userEvent.click(eye);
+          expect($.fn.modal).toHaveBeenCalled();
+
+          expect(document.querySelector("#modaleFile")).toBeTruthy();
+          expect(document.querySelector("#modaleFile").getAttribute("style")).not.toBe("display: none;");
+
+          const modale = screen.getByTestId('modaleFileTest')
+          expect(modale).toBeTruthy()
 
         })
       })
     })
-    
-    
     
    //.............
    describe('When I am on Bills page but it is loading', () => {
@@ -126,13 +106,11 @@
         expect(handleClick).toHaveBeenCalled()
       })
     })
-    
     //......
     
    })
  
   })
-
 
 // test d'intégration GET
 describe("Given I am a user connected as Admin", () => {
