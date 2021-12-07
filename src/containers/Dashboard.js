@@ -6,7 +6,6 @@ import USERS_TEST from '../constants/usersTest.js'
 import Logout from "./Logout.js"
 
 export const filteredBills = (data, status) => {
-  //console.log(filteredBills);
   return (data && data.length) ?
     data.filter(bill => {
 
@@ -148,7 +147,6 @@ export default class {
     }
     // 4eme erreur [Bug Hunt] - Dashboard
     filteredBills(bills, getStatus(this.index)).forEach(bill => {
-      //console.log(bills.forEach())
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
     return bills

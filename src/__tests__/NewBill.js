@@ -17,6 +17,7 @@ describe("Given I am connected as an employee", () => {
     type: 'Employee'
   }))
 
+  // test function handleChangeFile -> Bon ou mouvais format de fichier
   describe("When i change file", () => {
     test("Then the function handleChangeFile is called", () => {
       const html = NewBillUI()
@@ -39,6 +40,7 @@ describe("Given I am connected as an employee", () => {
     })
   })
 
+  // test message d'erreur
   describe("When i change file", () => {
     test("Then the error message = none", () => {
       const html = NewBillUI()
@@ -47,7 +49,6 @@ describe("Given I am connected as an employee", () => {
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({pathname})
       }
-      // Faut remplir le firestor... voir prk
       const firestore = {
         storage: {
           ref: jest.fn(() => {
@@ -73,6 +74,7 @@ describe("Given I am connected as an employee", () => {
     })
   })
 
+  //test function handleSubmit
   describe("When I'm on NewBill page and click on submit btn", () => {
     test("Then the function handleSubmit should be called", () => {
       const html = NewBillUI();
@@ -80,12 +82,7 @@ describe("Given I am connected as an employee", () => {
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       }
-      const newBill = new NewBill({
-        document,
-        onNavigate,
-        firestore: null,
-        localStorage: window.localStorage,
-      });
+      const newBill = new NewBill({document,onNavigate,firestore: null,localStorage: window.localStorage, });
 
       const form = document.querySelector(`form[data-testid="form-new-bill"]`);
       const handleSubmit = jest.fn(newBill.handleSubmit);
@@ -94,11 +91,17 @@ describe("Given I am connected as an employee", () => {
       expect(handleSubmit).toHaveBeenCalled();
     });
   });
+  
+})
 
-  describe("When I navigate to New Bill", () => {
+
+
+// test d'intégration post
+describe("Given I am a user connected as employee", () => {
+  describe("When I navigate to Bill employee page", () => {
+    
     test("Add bill to mock API POST", async () => {
       const postSpy = jest.spyOn(firebase, "post")
-      
       const newBill = {
         "id": "47qAXb6fIm2zOKkLzMro",
         "vat": "80",
@@ -115,19 +118,11 @@ describe("Given I am connected as an employee", () => {
         "pct": 20
       }
       const bills = await firebase.post(newBill)
-      console.log(bills);
       expect(postSpy).toHaveBeenCalledTimes(1)
       expect(bills.data.length).toBe(1)
     });
-  })
-})
-
-
-
-// test d'intégration GET
-describe("Given I am a user connected as Admin", () => {
-  describe("When I navigate to Dashboard", () => {
-    test("fetches bills from mock API GET", async () => {
+  
+    test("fetches bills from mock API Post", async () => {
        const postSpy = jest.spyOn(firebase, "post")
        const bills = await firebase.post()
        expect(postSpy).toHaveBeenCalledTimes(2)

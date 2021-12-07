@@ -18,7 +18,6 @@ export default class {
 
   handleClickNewBill = e => {
     this.onNavigate(ROUTES_PATH['NewBill'])
-    //console.log(this.onNavigate)
   }
 
   handleClickIconEye = (icon) => {
@@ -49,8 +48,6 @@ export default class {
             } catch(e) {
               // if for some reason, corrupted data was introduced, we manage here failing formatDate function
               // log the error and return unformatted date in that case
-              //console.log(e,'for',doc.data())
-              //console.log(doc.data())
               return {
                 ...doc.data(),
                 date: doc.data().date,
@@ -59,7 +56,6 @@ export default class {
             }
           })
           .filter(bill => bill.email === userEmail)
-          //console.log('length', bills.length)
         return bills
       })
       .catch(error => error)

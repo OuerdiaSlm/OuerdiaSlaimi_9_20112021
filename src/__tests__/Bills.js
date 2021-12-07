@@ -12,12 +12,6 @@
  
  describe("Given I am connected as an employee", () => {
    describe("When I am on Bills Page", () => {
-     test("Then bill icon in vertical layout should be highlighted", () => {
-       const html = BillsUI({ data: []})
-       document.body.innerHTML = html
-       //to-do write expect expression
-     })
- 
      //............................
      describe('When I am on Bills page but back-end send an error message', () => {
       test('Then, Error page should be rendered', () => {
@@ -26,7 +20,8 @@
         expect(screen.getAllByText('Erreur')).toBeTruthy()
       })
     })
-   
+    
+     // Test ordre d'affichage notes de frais
      test("Then bills should be ordered from earliest to latest", () => {
        const html = BillsUI({ data: bills })
        document.body.innerHTML = html
@@ -50,6 +45,7 @@
           const bill = new Bills({document, onNavigate, firestore: null, localStorage: window.localStorage,})
           
           $.fn.modal = jest.fn();
+
           const eye = screen.getAllByTestId('icon-eye')[1]
           const handleClickIconEye = jest.fn(bill, "handleClickIconEye")
           eye.addEventListener("click", () => bill.handleClickIconEye(eye));
@@ -66,15 +62,16 @@
       })
     })
     
-   //.............
+   //
    describe('When I am on Bills page but it is loading', () => {
     test('Then, Loading page should be rendered', () => {
       const html = BillsUI({ loading: true })
       document.body.innerHTML = html
       expect(screen.getAllByText('Loading...')).toBeTruthy()
     })
-  })
-   //.............
+   })
+
+    //test function handleClickNewBill -> ouverture de form
     describe("When I click on new bill button", () => {
       test("Then function handleClickNewBill is called and I navigate to new bill page", () => {
         const html = BillsUI({data:[]})
@@ -91,6 +88,7 @@
       })
     })
 
+    //test function handleClick -> deconnecter 
     describe("When I click on disconnected button", () => {
       test("Then function handleClick is called", () => {
         const html = BillsUI({data:[]})
@@ -106,15 +104,12 @@
         expect(handleClick).toHaveBeenCalled()
       })
     })
-    //......
-    
    })
- 
   })
 
 // test d'intégration GET
-describe("Given I am a user connected as Admin", () => {
-  describe("When I navigate to Dashboard", () => {
+describe("Given I am a user connected as employee", () => {
+  describe("When I navigate to Bill employee page", () => {
     test("fetches bills from mock API GET", async () => {
        const getSpy = jest.spyOn(firebase, "get")
        const bills = await firebase.get()
@@ -141,5 +136,3 @@ describe("Given I am a user connected as Admin", () => {
     })
   })
 })
-
-
